@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cronologia</title>
+</head>
+<body>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html{
+            scroll-behavior: smooth;
+        }
+        a {
+            text-decoration: none;
+            outline: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        body {
+           /* background-image: url("https://img.freepik.com/vector-gratis/fondo-fantasia-nube-ensueno-arco-iris_1017-32300.jpg?w=2000"); */
+            font-family: 'Noto Sans JP', sans-serif;	
+        }
+        /* =====HEADER=====*/
+        .navbar {
+            background: #ec923d;
+            position: sticky;
+            top:0;
+        }
+        
+        .navbar a {
+            color: #fff;
+            display: inline-block;
+            padding: 20px;
+            width: 100%;
+            text-align: center;
+            color: #000;
+            transition: .3s ease-out all;
+        }
+        
+        .navbar a:hover {
+            background: #63100e;
+            color: #fff;
+            text-decoration: none;
+        }
+        
+        .contenedor {
+            max-width: 1000px;
+            width: 90%;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+        }
+        /*--------MAIN----------*/
+        .informacion img{
+            margin: 70px;
+            width: 300px;
+            height: 300px;
+            display: flex;
+        }
+        .informacion{
+            display: flex;
+        
+            margin: 30px;
+            margin-left: 80px;
+        }
+        .texto{
+            margin: 20px;
+            padding-top: 70px;
+        }
+        .texto h2{
+            padding-left: 250px;
+        }
+        .texto ul > li{
+            padding-top: 30px;
+        }
+        .boton button{
+            width: 150px;
+            height: 40px;
+            border: 0px;
+            margin-top: 70px;
+            margin-left: 620px;
+            border-radius: 10px;
+            background-color: #cf5c19;
+        }
+        </style>
+        <body>
+            <header>
+                <nav class="navbar">
+                    <div class="contenedor">
+                        <a href="inicio.html">Inicio</a>
+                        <a href="cronologia.html">PORTAFOLIO</a>
+                        <a href="series.html">Estrenos</a>
+                    </div>
+                </nav>
+            </header>
+            <main>
+                <div class="boton">
+                    <button onclick="buscar()"><h2>siguiente</h2></button>
+                </div>
+                <div class="informacion">
+                    <img id="marvel" src="imagenes_del_portafolio/capitana_marvel.jpg" alt="capitana_marvel">
+                    <div class="texto">
+                        <h2 id="name">Pelicula Marvel</h2>
+                        <ul>
+                            <li>
+                                <p id="name"><b>Pelicula:</b>Capitana Marvel</p>
+                            </li>
+                            <li>
+                                <p id="releaseyear"><b>Año de estreno:</b>8 de Marzo de 2019</p>
+                            </li>
+                            <li>
+                                <p id="des"><b>Descripción:</b>Tiene poder de volar y capas de controlar energía cosmica</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </main>
+                    </body>
+        <script>
+        var idp=1;
+    var long=0;
+    
+        const url = "https://casas36.github.io/api/marvel.json";
+    
+        function buscar(){
+        
+            fetch(url)
+            .then(function(response){
+                return response.json();    
+            })
+        
+            .then(function(data){
+                console.log(data.figures);
+                long=data.figures.length;
+                console.log("lenght:"+ long);
+                var res= data.figures.filter(item=>item.id===idp);
+                console.log(res);
+                var imagen=document.getElementById('figure');
+                imagen.src=res[0].figure;
+                var p1=document.getElementById('name');
+                p1.innerHTML="<b>Nombre: </b>"+res[0].name;
+                var p2=document.getElementById('releaseyear');
+                p2.innerHTML="<b>Tipo: </b>"+res[0].releaseyear;
+                var p3=document.getElementById('des');
+                p3.innerHTML="<b>Descripción: </b>"+res[0].des;
+            })
+    
+            .catch(function(error){
+                console.log(error);           
+            });
+    
+            if (idp >= long){
+                idp=1;
+            }else{
+                idp++;
+            }
+            
+        } 
+        </script>
+        <script>
+            buscar()
+        </script>
+</html>
